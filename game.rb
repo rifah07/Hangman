@@ -9,14 +9,10 @@ class Game
   end
 
   def select_secret_word
-    words = File.readlines('words.txt')
-
-    valid_words = words.select do |word|
-      word.chomp!
-      word.length.between?(5,12)
-    end
-
-    valid_words.sample
+    File.readlines('words.txt')
+        .map(&:chomp)
+        .select { |word| word.length.between?(5, 12) }
+        .sample
   end
 
   # this method is to check each guess
