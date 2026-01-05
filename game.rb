@@ -35,6 +35,12 @@ class Game
     won? || lost?
   end
 
+  def display_word
+    @secret_word.chars.map do |letter|
+      @guessed_letters.include?(letter) ? letter : '_'
+    end.join(' ')
+  end
+
   private
 
   def valid_input?(letter)
