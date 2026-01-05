@@ -2,10 +2,21 @@
 
 # This is the main class
 class Game
-  def initialize(secret_word) # = select_secret_word
+  def initialize(secret_word = select_secret_word)
     @secret_word = secret_word
     @guessed_letters = []
     @wrong_guesses_remaining = 7
+  end
+
+  def select_secret_word
+    words = File.readlines('words.txt')
+
+    valid_words = words.select do |word|
+      word.chomp!
+      word.length.between?(5,12)
+    end
+
+    valid_words.sample
   end
 
   # this method is to check each guess
@@ -14,6 +25,18 @@ class Game
     return if already_guessed?(letter)
 
     process_guess(letter)
+  end
+
+  def won?
+    @secret_word.chars.uniq.all { |letter| @guessed_letters.include?(letter) }
+  end
+
+  def lost?
+    @wrong_guesses_remaining.zero?
+  end
+
+  def game_over?
+    won? || lost?
   end
 
   private
