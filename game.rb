@@ -41,6 +41,13 @@ class Game
     end.join(' ')
   end
 
+  def display_status
+    wrong_letters = @guessed_letters.reject { |letter| @secret_word.include?(letter) }
+
+    puts "Remaining guesses: #{@wrong_guesses_remaining}"
+    puts "Incorrect guessed letters: #{wrong_letters.join(', ')}"
+  end
+
   private
 
   def valid_input?(letter)
