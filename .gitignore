@@ -1,0 +1,13 @@
+# IDE / Editor
+.idea/
+.vscode/
+.ruby-lsp/
+
+# Ruby
+.bundle/
+vendor/bundle/
+*.gem
+*.rbc
+
+# OS
+.DS_Store
