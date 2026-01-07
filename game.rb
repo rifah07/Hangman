@@ -24,7 +24,7 @@ class Game
   end
 
   def won?
-    @secret_word.chars.uniq.all { |letter| @guessed_letters.include?(letter) }
+    @secret_word.chars.uniq.all? { |letter| @guessed_letters.include?(letter) }
   end
 
   def lost?
@@ -59,7 +59,7 @@ class Game
       input = gets.chomp.downcase
 
       if input == 'save'
-        puts "Saving feature coming soon!"
+        puts 'Saving feature coming soon!'
       else
         make_guess(input)
       end
