@@ -48,6 +48,34 @@ class Game
     puts "Incorrect guessed letters: #{wrong_letters.join(', ')}"
   end
 
+  def play
+    puts 'Welcome to the Hangman!'
+
+    until game_over?
+      puts "\n#{display_word}"
+      display_status
+
+      puts "\nEnter a letter to guess (or 'save' to save the game):"
+      input = gets.chomp.downcase
+
+      if input == 'save'
+        puts "Saving feature coming soon!"
+      else
+        make_guess(input)
+      end
+    end
+
+    puts "\n#{display_word}"
+
+    if won?
+      puts "Hurray! You won! The word was #{@secret_word}"
+    else
+      puts 'Game over!'
+      puts "You lost! The word was '#{@secret_word}'."
+      puts 'But do not be heartbroken. Try again.'
+    end
+  end
+
   private
 
   def valid_input?(letter)
@@ -58,14 +86,13 @@ class Game
   end
 
   def already_guessed?(letter)
-    return false unless @guessed_letters.include?(letter.downcase)
+    return false unless @guessed_letters.include?(letter)
 
     puts 'You already guessed that.'
     true
   end
 
   def process_guess(letter)
-    letter.downcase!
     @guessed_letters << letter
     if @secret_word.chars.include?(letter)
       puts 'Correct!'
