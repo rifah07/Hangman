@@ -8,7 +8,7 @@ def main_menu
     puts '1. New Game'
     puts '2. Load Game'
     puts '3. Exit'
-    puts "Choose an option: \t"
+    puts 'Choose an option: '
 
     choice = gets.chomp
 
