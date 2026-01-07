@@ -82,7 +82,7 @@ class Game
 
     puts 'Enter a filename for your save:'
     filename = gets.chomp
-    filepath = "saved_games/#{filename}.yaml"
+    filepath = "saved_games/#{filename}.yml"
 
     game_data = {
       'secret_word' => @secret_word,
@@ -92,6 +92,29 @@ class Game
 
     File.write(filepath, game_data.to_yaml)
     puts "Game saved as #{filepath}!"
+  end
+
+  def self.list_saved_games
+    return [] unless Dir.exist?('saved_games')
+
+    Dir.entries('saved_games').select { |f| f.end_with?('.yml') }
+  end
+
+  def self.load_game(filename)
+    filepath = "saved_games/#{filename}.yml"
+    data = YAML.load_file(filepath)
+
+    game = allocate
+
+    game.instance_variable_set(:@secret_word, data['secret_word'])
+    game.instance_variable_set(:@guessed_letters, data['guessed_letters'])
+    game.instance_variable_set(:@wrong_guesses_remaining, data['wrong_guesses_remaining'])
+
+    game
+
+  rescue Errno::ENOENT
+    puts 'Save file not found'
+    nil
   end
 
   private
