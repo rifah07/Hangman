@@ -2,6 +2,7 @@
 .idea/
 .vscode/
 .ruby-lsp/
+saved_games/
 
 # Ruby
 .bundle/

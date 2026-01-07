@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'yaml'
 # This is the main class
 class Game
   def initialize(secret_word = select_secret_word)
@@ -59,7 +60,7 @@ class Game
       input = gets.chomp.downcase
 
       if input == 'save'
-        puts 'Saving feature coming soon!'
+        save_game
       else
         make_guess(input)
       end
@@ -74,6 +75,23 @@ class Game
       puts "You lost! The word was '#{@secret_word}'."
       puts 'But do not be heartbroken. Try again.'
     end
+  end
+
+  def save_game
+    Dir.mkdir('saved_games') unless Dir.exist?('saved_games')
+
+    puts 'Enter a filename for your save:'
+    filename = gets.chomp
+    filepath = "saved_games/#{filename}.yaml"
+
+    game_data = {
+      'secret_word' => @secret_word,
+      'guessed_letters' => @guessed_letters,
+      'wrong_guesses_remaining' => @wrong_guesses_remaining
+    }
+
+    File.write(filepath, game_data.to_yaml)
+    puts "Game saved as #{filepath}!"
   end
 
   private
